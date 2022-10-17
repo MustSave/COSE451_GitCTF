@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const sessionConfig = require("./app/config/session.config")
+const fileStore = require("session-file-store")(session);
 
 const app = express();
 
@@ -20,13 +23,27 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 // to use cookie
 app.use(cookieParser());
+// to use session
+app.use(session({...sessionConfig, store: new fileStore()}))
+
 // set header
-app.use(function(req, res, next) {
+app.use(async function(req, res, next) {
     res.header(
         "Access-Control-Allow-Headers",
         "x-access-token, Origin, Content-Type, Accept"
     );
-    next();
+
+    // check session expired
+    const expTime = process.env.SESSION_EXPIRY_TIME * 1000;
+    if (Date.now() - req.session.__lastAccess > expTime) {
+        await req.session.destroy(err=>{
+            if (err) console.log(err);
+            res.clearCookie("sessionId", {httpOnly: true, secure: !process.env.DEV });
+            return res.status(408).send({message: "Session expired"});
+        })
+    }
+    else
+        next();
 });
 
 app.use("/auth", require("./app/routes/auth.routes.js"));

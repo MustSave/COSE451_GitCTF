@@ -18,13 +18,24 @@ exports.signin = (req, res) => {
             
             userInfo[0].year = process.env.CUR_YEAR;
             userInfo[0].term = process.env.CUR_TERM;
-            return res.status(200).send(userInfo[0])
             
-
+            req.session.is_logined = true;
+            req.session.std_num = userInfo[0].std_num;
+            req.session.save(()=>{
+                return res.status(200).send(userInfo[0])
+            })
         })
     })
 }
 
 exports.logout = (req, res) => {
-    return res.status(200).send()
+    if (req.session){
+        req.session.destroy(err=>{
+            if(err) throw err;
+            res.clearCookie("sessionId", {httpOnly: true, secure: !process.env.DEV });
+            return res.status(200).send()
+        })
+    }
+
+    else return res.status(400).send();
 }
