@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 0;
+}
+select {
+  width: 100%;
+  height: 25px;
+  font-family: "Segoe UI","���� ����","Malgun Gothic","���� SD �굹���� Neo","Apple SD Gothic Neo",sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  letter-spacing: -.5px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  padding: 0 20px 2px 5px;
+  background-image: url(./img/contents/bg-select.png);
+  background-repeat: no-repeat;
+  background-position: right 8px top 50%;
+}
+
+select option {
+  padding-left: 5px;
+}
+
+input[type="button"].btn-sub, input[type="submit"].btn-sub, input[type="reset"].btn-sub, button.btn-sub, .button.btn-sub, .ui-button.btn-sub, .file-label.btn-sub {
+  background-color: #876243;
+  border-color: #76563b;
+  color: #fff;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
