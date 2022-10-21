@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const sessionConfig = require("./app/config/session.config")
 const fileStore = require("session-file-store")(session);
 
 const app = express();
@@ -17,14 +16,13 @@ var corsOptions = {
 app.use(require("helmet")())
 // enable cors option
 app.use(cors(corsOptions));
-// parse requests of content-type - application/json
-app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({extended: true}));
-// to use cookie
-app.use(cookieParser());
-// to use session
-app.use(session({...sessionConfig, store: new fileStore()}))
+
+// parse requests of content-type - application/json and application/x-www-form-urlencoded
+app.use(express.json(), express.urlencoded({extended: true}));
+
+// to use cookie and session
+app.use(cookieParser(), session({...require("./app/config/session.config"), store: new fileStore()}));
+
 
 // set header
 app.use(async function(req, res, next) {

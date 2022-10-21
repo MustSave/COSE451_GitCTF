@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Loader from "./components/sugang.userpage.loader";
 import Nav from "./components/sugang.userpage.nav";
+import Container from './components/sugang.userpage.container';
 
 const StyledDiv = styled.div`
     display: flex;
@@ -25,6 +26,7 @@ export default function UserPage(){
         {/* <Loader/> */}
         <StyledDiv className={showNav ? null : "nav-closed"}>
           <Nav setPage={setPage}/>
+          <Container page={page} setShowNav={setShowNav} userInfo={userInfo} />
         </StyledDiv>
       </>
     );
