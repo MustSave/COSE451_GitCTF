@@ -46,6 +46,7 @@ app.use(async function(req, res, next) {
 
 app.use("/auth", require("./app/routes/auth.routes.js"));
 app.use("/data", require("./app/routes/data.routes.js"));
+app.use("/user", require("./app/routes/user.routes.js"));
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

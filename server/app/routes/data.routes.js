@@ -4,7 +4,7 @@ const apiController = require("../controllers/data.controller.js")
 
 // authorization
 router.use(function(req, res, next) {
-    if (req.session.is_logined === false) {
+    if (!req.session.is_logined) {
         return res.status(408).send({message: "Session expired"});
     }
     else

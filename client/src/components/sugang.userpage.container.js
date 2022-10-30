@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { LangContext } from "../App";
 import AuthService from "../services/auth.service";
 import SearchLecture from "./sugang.userpage.container.search";
+import Enroll from "./sugang.userpage.container.enroll";
 
 import navIcon from "../img/layout/bg-controller.png";
 import layoutIcon from "../img/contents/bg-select.png"
@@ -227,7 +228,7 @@ export default function Container({page, setShowNav, userInfo}) {
                     </div>
                 </div>
             </div>
-            <SearchLecture userInfo={userInfo}/>
+            {page==='Search' ? <SearchLecture userInfo={userInfo}/> : <Enroll userInfo={userInfo}/>}
         </StyledDiv>
     )
 }
