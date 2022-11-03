@@ -1,4 +1,5 @@
 const db = require("../models");
+const bcrypt = require("bcryptjs")
 
 exports.signin = (req, res) => {
     db.query(`SELECT pw, role from login where std_num=?`, req.body.id, (err, results)=>{
@@ -7,7 +8,8 @@ exports.signin = (req, res) => {
             return res.status(404).send({message:"Invalid ID or PW"});
         }
         
-        const isPasswordValid = results[0].pw == req.body.pw; // password auth TBD
+        // const isPasswordValid = results[0].pw == req.body.pw; // password auth TBD
+        const isPasswordValid = bcrypt.compareSync(req.body.pw, results[0].pw);
 
         if (isPasswordValid == false)
             return res.status(404).send({message:"Invalid ID or PW"});
