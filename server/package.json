@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon --exitcrash server.js"
   },
   "keywords": [
     "node.js",
@@ -14,7 +14,7 @@
     "mysql"
   ],
   "nodemonConfig": {
-    "ignore":[
+    "ignore": [
       "**/sessions/*"
     ]
   },

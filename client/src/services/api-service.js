@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:8080/data/";
+const API_URL = "./data/";
 
 class ApiService {
     getColList(year, term){

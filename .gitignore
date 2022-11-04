@@ -19,7 +19,7 @@ client/build
 .env.test.local
 .env.production.local
 
-*.sql
+# *.sql
 
 npm-debug.log*
 yarn-debug.log*
