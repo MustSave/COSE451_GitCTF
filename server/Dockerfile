@@ -1,6 +1,8 @@
 FROM node
 
-WORKDIR /home/server/app
+WORKDIR /home/server
+
+RUN mkdir app
 
 COPY package*.json ./
 

@@ -18,7 +18,9 @@ services:
     image: client
     container_name: client
     volumes:
-      - ./client:/home/front/app
+      - ./client/src:/home/front/app/src
+      - ./client/public:/home/front/app/public
+      - ./client/.env:/home/front/app/.env
     ports:
       - "8081:8081"
   backend:
@@ -28,7 +30,9 @@ services:
     image: server
     container_name: server
     volumes:
-      - ./server:/home/server/app
+      - ./server/app:/home/server/app
+      - ./server/.env:/home/server/.env
+      - ./server/server.js:/home/server/server.js
     ports:
       - "8080:8080"
     # depends_on:
