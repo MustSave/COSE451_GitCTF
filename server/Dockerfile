@@ -1,9 +1,9 @@
-FROM node:16.18.0
+FROM node
 
 WORKDIR /home/server/app
 
-COPY ./package*.json ./
+COPY package*.json ./
 
-RUN npm ci
+RUN chown root:root ./ && npm ci
 
 CMD ["npm", "run", "test"]

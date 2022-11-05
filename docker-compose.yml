@@ -1,21 +1,15 @@
 version: '2'
 
-# networks:
-#   app-tier:
-#     driver: host
-
 services:
-  database:
-    # networks:
-    #   - app-tier
-    network_mode: "host"
-    build: ./mysql
-    image: database
-    container_name: database
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+  # database:
+  #   network_mode: "host"
+  #   build: ./mysql
+  #   image: db
+  #   container_name: database
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
   frontend:
     # networks:
     #     - app-tier
@@ -28,8 +22,6 @@ services:
     ports:
       - "8081:8081"
   backend:
-    # networks:
-    #   - app-tier
     restart: unless-stopped
     network_mode: "host"
     build: ./server
@@ -39,11 +31,9 @@ services:
       - ./server:/home/server/app
     ports:
       - "8080:8080"
-    depends_on:
-      - database
+    # depends_on:
+    #   - database
   nginx:
-    # networks:
-    #   - app-tier
     network_mode: "host"
     build: ./nginx
     image: proxy_server
@@ -52,5 +42,4 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "80:80"
-  
+      - "8888:8888"
