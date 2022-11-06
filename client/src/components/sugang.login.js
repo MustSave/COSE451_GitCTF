@@ -7,6 +7,7 @@ import iconPw from "../img/login/icon-pw.png";
 import mainImg from "../img/login/img-login.jpg";
 import AuthService from "../services/auth.service"
 import { LangContext } from "../App";
+import sha256 from "sha256";
 
 const StyledDiv = styled.div`
   position: relative;
@@ -99,14 +100,19 @@ export default function Login() {
         btn.disabled=true;
         btn.style.cursor='wait';
 
-        AuthService.login(id, pwd).then((res)=>{
+        AuthService.login(id, sha256(pwd)).then((res)=>{
             console.log(res);
             btn.disabled=false;
             btn.style.cursor='pointer';
             navigate('/user', {state : res})
         }).catch(err=>{
             console.log(err)
-            alert(lang === 'KOR' ? "아이디나 비밀번호 오류입니다" : "Invalid ID or PW");
+            if (err.response.status === 404) {
+              alert(err.response.data.message);
+            }
+            else {
+              alert("Server is not responding")
+            }
             btn.disabled=false;
             btn.style.cursor='pointer';
         })

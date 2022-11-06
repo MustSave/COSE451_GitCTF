@@ -32,8 +32,9 @@ app.use(async function(req, res, next) {
     );
 
     // check session expired
+    // const expTime = 5000;
     const expTime = process.env.SESSION_EXPIRY_TIME * 1000;
-    if (Date.now() - req.session.__lastAccess > expTime) {
+    if (Date.now() - req.session?.__lastAccess > expTime) {
         await req.session.destroy(err=>{
             if (err) console.log(err);
             res.clearCookie("sessionId", {httpOnly: true, secure: !process.env.DEV });

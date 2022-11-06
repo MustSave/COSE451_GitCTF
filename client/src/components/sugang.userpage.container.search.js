@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import apiService from "../services/api-service";
 import checkIcon from "../img/contents/icon-check.png"
@@ -244,6 +245,14 @@ export default function SearchLecture({userInfo}) {
         cour_nm: undefined
     })
 
+    const navigate = useNavigate();
+    const handleError = err => {
+        if (err.response.status === 403) {
+            alert(err.response.data.message);
+            navigate('/');
+        }
+    }
+
     const updateInputValue = (toChange) => {
         setInputObjects(prev=>{
             return {...prev, ...toChange}
@@ -296,9 +305,9 @@ export default function SearchLecture({userInfo}) {
 
                 setOptionList({col: resCol, dept: resDept})
             })
-            .catch(err=>{throw err})
+            .catch(handleError)
         })
-        .catch(err=>{throw err})
+        .catch(handleError)
     },[trigger]);
 
     const onChangeCol = async (e, u=undefined)=>{
@@ -309,13 +318,13 @@ export default function SearchLecture({userInfo}) {
             }
             setOptionList(prev=>{return {...prev, dept: resDept}})
         })
-        .catch(err=>{throw err})
+        .catch(handleError)
     }
 
     const onClickSearch = (e)=>{
         apiService.getLecList({...inputObjects, ...optionalInput.current})
         .then(res=>{console.log(res);setLecList(res)})
-        .catch(err=>{throw err})
+        .catch(handleError)
     }
 
     return (

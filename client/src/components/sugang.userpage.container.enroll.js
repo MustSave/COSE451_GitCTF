@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import userService from "../services/user.service";
 
@@ -28,35 +29,39 @@ export default function Enroll({userInfo}) {
         cour_cls: undefined,
     })
     
+    const navigate = useNavigate();
+    const handleError = err => {
+        if (err.response.status === 403) {
+            alert(err.response.data.message);
+            navigate('/');
+        }
+    }
+    
     useEffect(()=>{
         console.log("UE");
         userService.getHistory({std_num: userInfo.std_num, year: userInfo.year, term: userInfo.term})
-        .then(res=>{
-            console.log(res)
-            setHistory(res);
-        })
+            .then(res=>setHistory(res))
+            .catch(handleError)
     }, [])
 
     const onEnroll = (param)=>{
-        console.log(enrollParam.current)
+        // client side basic validation
         if (!enrollParam.current.cour_cd || !enrollParam.current.cour_cls) {
             alert("check input");
             return;
         }
 
         userService.enroll(enrollParam.current)
-        .then(res=>{
-            setHistory(res);
-        })
+            .then(res=>setHistory(res))
+            .catch(handleError)
     }
 
     const onCancel = (e)=>{
         if (!window.confirm("삭제하시겠습니까?")) return;
         const children = e.target.parentElement.children;
         userService.cancel({std_num: userInfo.std_num, cour_cd: children['cour_cd'].innerText, cour_cls: children['cour_cls'].innerText})
-        .then(res=>{
-            setHistory(res);
-        })
+            .then(res=>setHistory(res))
+            .catch(handleError)
     }
 
     return(

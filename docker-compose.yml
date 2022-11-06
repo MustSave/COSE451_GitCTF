@@ -18,9 +18,11 @@ services:
     image: client
     container_name: client
     volumes:
-      - ./client/src:/home/front/app/src
-      - ./client/public:/home/front/app/public
-      - ./client/.env:/home/front/app/.env
+      - ./client/src:/home/front/app/src:ro
+      - ./client/public:/home/front/app/public:ro
+      - ./client/.env:/home/front/app/.env:ro
+      - ./client/package.json:/home/front/app/package.json:rw
+      - ./client/package-lock.json:/home/front/app/package-lock.json:rw
     ports:
       - "8081:8081"
   backend:
@@ -30,9 +32,11 @@ services:
     image: server
     container_name: server
     volumes:
-      - ./server/app:/home/server/app
-      - ./server/.env:/home/server/.env
-      - ./server/server.js:/home/server/server.js
+      - ./server/app:/home/server/app:ro
+      - ./server/.env:/home/server/.env:ro
+      - ./server/server.js:/home/server/server.js:ro
+      - ./server/package.json:/home/server/package.json:rw
+      - ./server/package-lock.json:/home/server/package-lock.json:rw
     ports:
       - "8080:8080"
     # depends_on:
@@ -46,4 +50,4 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "8888:8888"
+      - "81:81"
