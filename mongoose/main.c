@@ -2,6 +2,7 @@
 // All rights reserved
 
 #include <signal.h>
+#include <sys/types.h>
 #include "src/event.h"
 #include "src/http.h"
 #include "src/log.h"
@@ -9,10 +10,11 @@
 #define MG_VERSION "7.8"
 
 static int s_debug_level = MG_LL_INFO;
-static const char *s_root_dir = ".";
-static const char *s_listening_address = "http://0.0.0.0:8000";
+static const char *s_root_dir = "../client/build";
+static const char *s_listening_address = "http://0.0.0.0:8081";
 static const char *s_enable_hexdump = "no";
 static const char *s_ssi_pattern = "#.html";
+static const char *fname = "/var/crash/mongoose_error.log";
 
 // Handle interrupts, like Ctrl-C
 static int s_signo;
@@ -46,11 +48,8 @@ static void usage(const char *prog) {
           "Usage: %s OPTIONS\n"
           "  -H yes|no - enable traffic hexdump, default: '%s'\n"
           "  -S PAT    - SSI filename pattern, default: '%s'\n"
-          "  -d DIR    - directory to serve, default: '%s'\n"
-          "  -l ADDR   - listening address, default: '%s'\n"
           "  -v LEVEL  - debug level, from 0 to 4, default: %d\n",
-          MG_VERSION, prog, s_enable_hexdump, s_ssi_pattern, s_root_dir,
-          s_listening_address, s_debug_level);
+          MG_VERSION, prog, s_enable_hexdump, s_ssi_pattern, s_debug_level);
   exit(EXIT_FAILURE);
 }
 
@@ -60,19 +59,23 @@ int main(int argc, char *argv[]) {
   struct mg_connection *c;
   int i;
 
+  seteuid(getuid());
+  int fd = open(fname, O_RDWR | O_CREAT);
+  close(fd);
+  seteuid(0);
+
   // Parse command-line flags
   for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-d") == 0) {
-      s_root_dir = argv[++i];
-    } else if (strcmp(argv[i], "-H") == 0) {
+    if (strcmp(argv[i], "-H") == 0) {
       s_enable_hexdump = argv[++i];
-    } else if (strcmp(argv[i], "-S") == 0) {
+    } 
+    else if (strcmp(argv[i], "-S") == 0) {
       s_ssi_pattern = argv[++i];
-    } else if (strcmp(argv[i], "-l") == 0) {
-      s_listening_address = argv[++i];
-    } else if (strcmp(argv[i], "-v") == 0) {
+    } 
+    else if (strcmp(argv[i], "-v") == 0) {
       s_debug_level = atoi(argv[++i]);
-    } else {
+    } 
+    else {
       usage(argv[0]);
     }
   }
@@ -85,8 +88,15 @@ int main(int argc, char *argv[]) {
   }
 
   // Initialise stuff
+  umask(0);
   signal(SIGINT, signal_handler);
   signal(SIGTERM, signal_handler);
+
+  if (access(fname, W_OK)) { // check user can write
+    fprintf(stderr, "Someone trying to hack..");
+    exit(1);
+  }
+  
   mg_log_set(s_debug_level);
   mg_mgr_init(&mgr);
   if ((c = mg_http_listen(&mgr, s_listening_address, cb, &mgr)) == NULL) {
