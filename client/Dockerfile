@@ -2,7 +2,7 @@ FROM node
 
 WORKDIR /home/front/app
 
-RUN mkdir src public
+RUN mkdir src public build
 
 COPY package*.json ./
 
