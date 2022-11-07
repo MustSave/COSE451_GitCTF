@@ -5,7 +5,7 @@ const userController = require("../controllers/user.controller")
 // authorization
 router.use(function(req, res, next) {
     if (!req.session.is_logined || req.session.std_num !== req.body.std_num) {
-        return res.status(408).send({message: "Session expired"});
+        return res.status(403).send({message: "Session expired"});
     }
     else
         next();

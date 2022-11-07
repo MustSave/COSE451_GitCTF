@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.7.33, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.33, for Linux (i686)
 --
 -- Host: localhost    Database: sugang
 -- ------------------------------------------------------
@@ -18,11 +18,6 @@
 --
 -- Table structure for table `dept`
 --
-DROP DATABASE IF EXISTS sugang;
-
-CREATE DATABASE sugang;
-
-USE sugang;
 
 DROP TABLE IF EXISTS `dept`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -162,7 +157,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES ('2022123456','$2a$10$lvUS6evhFKob0TdFVlYvCudnIGWtx7bstsmq.GAv/fXVA2o2xTXqO','std');
+INSERT INTO `login` VALUES ('2022123456','$2a$10$W8OrSW0hbJJYA264aCtIe.Ghu/ptg6vGzYQmSB0cspAv1vmF9U1Cq','std');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-04  0:49:16
+-- Dump completed on 2022-11-07 15:56:20
