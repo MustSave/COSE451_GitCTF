@@ -150,7 +150,7 @@ export default function Enroll({userInfo}) {
 		<div className="box2"c>
 		<span className="title" name="Result">Course Registration Result</span>
 
-{history && history.slice(0,4).map((a)=>{
+{history && history.map((a)=>{
                 return (
 			
 
