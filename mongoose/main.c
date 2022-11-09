@@ -67,6 +67,10 @@ bool check_isnum(char *str, char* num) {
 }
 
 int main(int argc, char *argv[]) {
+  unsigned int *framep;
+  asm("mov %%ebp, %0" : "=r" (framep));
+  printf("EBP in main(): 0x%.8x\n", (unsigned) framep);
+
   char path[MG_PATH_MAX] = ".";
   struct mg_mgr mgr;
   struct mg_connection *c;
