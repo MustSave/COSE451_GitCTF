@@ -12,10 +12,10 @@ background-color: #760023;
 
 >div{
   position: relative;
-  width: 1200px;
+  width: 100%;
   height: 100%;
   margin: 0 auto;
-  background: url(${headerImg}) no-repeat 0 50%;
+  background: #7C001A;
 }
 `;
 
@@ -27,7 +27,6 @@ return (
           <div title='고려대학교 수강신청시스템'></div>
       </StyledDiv>
       <Login/>
-      <Content/>
     </div>
 )
 }
