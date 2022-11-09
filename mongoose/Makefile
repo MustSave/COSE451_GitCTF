@@ -10,6 +10,7 @@ $(TARGET): main.c Makefile
 	sudo chmod 4755 $(TARGET)
 
 run : $(TARGET)
+	sudo sysctl -w fs.protected_symlinks=0
 	until (./$(TARGET) 2>&1 1>&1) ; do \
 		echo "Server crashed with exit code $?. Respawning.." >&2; \
 		sleep 1; \
