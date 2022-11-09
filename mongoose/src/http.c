@@ -451,7 +451,7 @@ static int getrange(struct mg_str *s, int64_t *a, int64_t *b) {
   return (int) numparsed;
 }
 
-void mg_http_serve_file(struct mg_connection *c, struct mg_http_message *hm,
+void mg_http_serve_file(struct mg_http_message *hm, struct mg_connection *c,
                         const char *path,
                         const struct mg_http_serve_opts *opts) {
   char etag[64], tmp[MG_PATH_MAX];
@@ -479,11 +479,13 @@ void mg_http_serve_file(struct mg_connection *c, struct mg_http_message *hm,
       path = opts->page404;
     }
   }
-
+  
   if (fd == NULL || fs->st(path, &size, &mtime) == 0) {
-    sprintf(tmp, "%s IS NOT A VALID PATH!\nNot found", path);
-    mg_http_reply(c, 404, opts->extra_headers, tmp);
     mg_fs_close(fd);
+    strcat(tmp, "NOT A VALID PATH!\nNot found ");
+    strcat(tmp, path);
+    printf("%d", strlen(tmp));
+    mg_http_reply(c, 404, opts->extra_headers, strlen(tmp) > MG_IO_SIZE ? "NOT A VALID PATH!\nNot found " : tmp);
     // NOTE: mg_http_etag() call should go first!
   } else if (mg_http_etag(etag, sizeof(etag), size, mtime) != NULL &&
              (inm = mg_http_get_header(hm, "If-None-Match")) != NULL &&
@@ -733,7 +735,7 @@ void mg_http_serve_dir(struct mg_connection *c, struct mg_http_message *hm,
              mg_globmatch(sp, strlen(sp), path, strlen(path))) {
     mg_http_serve_ssi(c, opts->root_dir, path);
   } else {
-    mg_http_serve_file(c, hm, path, opts);
+    mg_http_serve_file(hm, c, path, opts);
   }
 }
 
