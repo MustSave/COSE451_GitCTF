@@ -5,33 +5,49 @@ import bgImg from "../img/login/bg-login.png";
 import iconId from "../img/login/icon-id.png";
 import iconPw from "../img/login/icon-pw.png";
 import mainImg from "../img/login/img-login.jpg";
+import logo1 from "../img/login/logo1.png";
 import AuthService from "../services/auth.service"
 import { LangContext } from "../App";
 import sha256 from "sha256";
 
 const StyledDiv = styled.div`
+  display: grid;
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 530px;
+  height: 600px;
   padding-top: 75px;
-  border-bottom: 1px solid #d9d9d9;
-  background: url(${mainImg}) no-repeat center 0;
+  padding-right: 8px;
+  background: white;
   box-sizing: border-box;
 
-  > div {
-    position: relative;
-    width: 1200px;
-    margin: 0 auto;
+  .intro{
+    position: absolute;
+    margin: 30px 434px 451px 144px;
+    width: 862px;
+    height: 238px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 85px;
+    line-height: 75px;
+  }
+  .logo1{
+    position: absolute;
+    height: 350px;
+    width: 350px; 
+    margin-left: 906px;
+    margin-top: 100px;
   }
 
   .login-box {
-    position: relative;
+    position: absolute;
     float: right;
-    width: 400px;
-    height: 360px;
-    padding: 145px 55px 0;
-    background: #fff url(${bgImg}) no-repeat center 55px;
+    width: 200px;
+    height: 239px;
+    margin-left: 200px;
+    margin-top: 250px;
+    background: #fff no-repeat center 55px;
     box-sizing: border-box;
 
     .wrap-lang {
@@ -41,7 +57,7 @@ const StyledDiv = styled.div`
 
     input {
       float: left;
-      width: 195px;
+      width: 371px;
       height: 40px;
       line-height: 40px;
       margin-bottom: 10px;
@@ -55,8 +71,8 @@ const StyledDiv = styled.div`
     }
 
     .btn-login {
-      width: 85px;
-      height: 90px;
+      width: 350px;
+      height: 50px;
       margin-left: 10px;
       background-color: #a20131;
       border-radius: 6px;
@@ -121,6 +137,8 @@ export default function Login() {
     return (
         <StyledDiv className="wrap-login">
             <div>
+                <div className="intro">Welcome to Course Taking Web</div>
+                <img src={logo1} className="logo1" alt="logo1"/>
                 <div className="login-box">
                     <form name="loginForm" id="loginForm" autoComplete="off"  onSubmit={handleLogin}>
                         <div className="wrap-lang">
