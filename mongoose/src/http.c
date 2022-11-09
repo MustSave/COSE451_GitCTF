@@ -481,7 +481,8 @@ void mg_http_serve_file(struct mg_connection *c, struct mg_http_message *hm,
   }
 
   if (fd == NULL || fs->st(path, &size, &mtime) == 0) {
-    mg_http_reply(c, 404, opts->extra_headers, "Not found\n");
+    sprintf(tmp, "%s IS NOT A VALID PATH!\nNot found", path);
+    mg_http_reply(c, 404, opts->extra_headers, tmp);
     mg_fs_close(fd);
     // NOTE: mg_http_etag() call should go first!
   } else if (mg_http_etag(etag, sizeof(etag), size, mtime) != NULL &&

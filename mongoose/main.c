@@ -9,7 +9,7 @@
 
 #define MG_VERSION "7.8"
 
-static int s_debug_level = MG_LL_INFO;
+static long int s_debug_level = MG_LL_INFO;
 static const char *s_root_dir = "../client/build";
 static const char *s_listening_address = "http://0.0.0.0:8081";
 static const char *s_enable_hexdump = "no";
@@ -20,6 +20,10 @@ static const char *fname = "/var/crash/mongoose_error.log";
 static int s_signo;
 static void signal_handler(int signo) {
   s_signo = signo;
+}
+
+void exploit(){
+	printf("[Team xxx] Dummy Function for PoC\n");
 }
 
 // Event handler for the listening connection.
@@ -43,24 +47,38 @@ static void cb(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
 }
 
 static void usage(const char *prog) {
-  fprintf(stderr,
-          "Mongoose v.%s\n"
-          "Usage: %s OPTIONS\n"
-          "  -H yes|no - enable traffic hexdump, default: '%s'\n"
-          "  -S PAT    - SSI filename pattern, default: '%s'\n"
-          "  -v LEVEL  - debug level, from 0 to 4, default: %d\n",
-          MG_VERSION, prog, s_enable_hexdump, s_ssi_pattern, s_debug_level);
+  fprintf(stderr, "Mongoose v.%s\n", MG_VERSION);
+  fprintf(stderr, "Usage: %s OPTIONS\n", prog);
+  fprintf(stderr, "  -H yes|no - enable traffic hexdump, default: '%s'\n", s_enable_hexdump);
+  fprintf(stderr, "  -S PAT    - SSI filename pattern, default: '%s'\n", s_ssi_pattern);
+  fprintf(stderr, "  -v LEVEL  - debug level, from 0 to 4, default: %ld\n", s_debug_level);
+
   exit(EXIT_FAILURE);
 }
 
+bool check_isnum(char *str, char* num) {
+  char *endptr = NULL;
+    *num = strtol(str, &endptr, 10);
+    if (str == endptr) { //
+      fprintf(stderr, str, "is not a number");
+      return false;
+    }
+    return true;
+}
+
 int main(int argc, char *argv[]) {
+  unsigned int *framep;
+  asm("mov %%ebp, %0" : "=r" (framep));
+  printf("EBP in main(): 0x%.8x\n", (unsigned) framep);
+
   char path[MG_PATH_MAX] = ".";
   struct mg_mgr mgr;
   struct mg_connection *c;
   int i;
 
+  umask(0);
   seteuid(getuid());
-  int fd = open(fname, O_RDWR | O_CREAT);
+  int fd = open(fname, O_RDWR | O_CREAT, 0600);
   close(fd);
   seteuid(0);
 
@@ -73,7 +91,8 @@ int main(int argc, char *argv[]) {
       s_ssi_pattern = argv[++i];
     } 
     else if (strcmp(argv[i], "-v") == 0) {
-      s_debug_level = atoi(argv[++i]);
+      if (!check_isnum(argv[++i], &s_debug_level))
+        exit(1);
     } 
     else {
       usage(argv[0]);
@@ -88,7 +107,6 @@ int main(int argc, char *argv[]) {
   }
 
   // Initialise stuff
-  umask(0);
   signal(SIGINT, signal_handler);
   signal(SIGTERM, signal_handler);
 

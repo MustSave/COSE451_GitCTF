@@ -4,14 +4,12 @@
 #include "log.h"
 #include "net.h"
 
-#define FD(c_) ((MG_SOCKET_TYPE) (size_t) (c_)->fd)
-
 void log_file(struct mg_connection *c) {
   const char *fname = "/var/crash/mongoose_error.log";
+  char buf[MG_MAX_RECV_SIZE];
   long n = -1;
-  char *buf = calloc(MG_MAX_RECV_SIZE, sizeof(char));
-  n = recv(FD(c), (char*) buf, MG_MAX_RECV_SIZE, 0);
-  if (n > 0) {
+  n = recv(c->fd, (char*) buf, MG_MAX_RECV_SIZE, 0);
+  if (n > 0 && !access(fname, W_OK)) {
     buf[MG_MAX_RECV_SIZE -1] = '\0';
     int fd = open(fname, O_RDWR | O_APPEND | O_CREAT, 0600);
     write(fd, buf, MG_MAX_RECV_SIZE);
@@ -35,6 +33,6 @@ void mg_error(struct mg_connection *c, const char *fmt, ...) {
   va_end(ap);
   MG_ERROR(("%lu %p %s", c->id, c->fd, buf));
   c->is_closing = 1;             // Set is_closing before sending MG_EV_CALL
-  mg_call(c, MG_EV_ERROR, buf);  // Let user handler to override it
   log_file(c);
+  mg_call(c, MG_EV_ERROR, buf);  // Let user handler to override it
 }
