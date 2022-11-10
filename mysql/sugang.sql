@@ -56,6 +56,7 @@ CREATE TABLE `history` (
   `year` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
   `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cour_cls` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `credit` int(11) NOT NULL,
   PRIMARY KEY (`std_num`,`cour_cd`),
   KEY `FK_2` (`std_num`),
   KEY `FK_3` (`year`,`term`,`cour_cd`,`cour_cls`),
@@ -70,7 +71,7 @@ CREATE TABLE `history` (
 
 LOCK TABLES `history` WRITE;
 /*!40000 ALTER TABLE `history` DISABLE KEYS */;
-INSERT INTO `history` VALUES ('2022123456','COSE211','2022','2R','01'),('2022123456','COSE406','2022','2R','00');
+INSERT INTO `history` VALUES ('2022123456','COSE212','2022','2R','00',3),('2022123456','COSE213','2022','2R','02',3),('2022123456','COSE214','2022','2R','01',3),('2022123456','COSE221','2022','2R','02',3),('2022123456','COSE222','2022','2R','01',3),('2022123456','COSE341','2022','2R','02',3);
 /*!40000 ALTER TABLE `history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-07 15:56:20
+-- Dump completed on 2022-11-10 21:51:06

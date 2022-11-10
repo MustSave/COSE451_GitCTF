@@ -39,6 +39,10 @@ struct mg_mgr {
 };
 
 struct mg_connection {
+  mg_event_handler_t fn;       // User-specified event handler function
+  void *fn_data;               // User-specified function parameter
+  mg_event_handler_t pfn;      // Protocol-specific handler function
+  void *pfn_data;              // Protocol-specific function parameter
   struct mg_connection *next;  // Linkage in struct mg_mgr :: connections
   struct mg_mgr *mgr;          // Our container
   struct mg_addr loc;          // Local address
@@ -47,10 +51,6 @@ struct mg_connection {
   unsigned long id;            // Auto-incrementing unique connection ID
   struct mg_iobuf recv;        // Incoming data
   struct mg_iobuf send;        // Outgoing data
-  mg_event_handler_t fn;       // User-specified event handler function
-  void *fn_data;               // User-specified function parameter
-  mg_event_handler_t pfn;      // Protocol-specific handler function
-  void *pfn_data;              // Protocol-specific function parameter
   char label[50];              // Arbitrary label
   void *tls;                   // TLS specific data
   unsigned is_listening : 1;   // Listening connection

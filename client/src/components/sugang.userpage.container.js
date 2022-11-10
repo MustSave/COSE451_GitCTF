@@ -11,10 +11,12 @@ import layoutIcon from "../img/contents/bg-select.png"
 import logoImg from "../img/layout/logo.png";
 
 const StyledDiv = styled.div`
+
 flex: 1 0 0px;
 max-width: 100%;
 min-width: 0;
 min-height: 100vh;
+
 
 .nav-control {
     position: absolute;
