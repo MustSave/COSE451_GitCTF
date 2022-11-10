@@ -12,14 +12,16 @@ sudo docker rmi kito4972/node:16.18.0
 # build c
 make -C mongoose clean static_server
 
-# install database & put data
-sudo apt-get install -y mysql-server
-sudo service mysql start
-echo create database sugang | mysql -uroot -proot
-mysql -uroot -proot sugang < mysql/sugang.sql
-
 # set privilege
 sudo find ./ -type d -exec sudo chmod 755 {} \;
 sudo find ./ -type f -exec sudo chmod 644 {} \;
 sudo chown root:root ./
 sudo chmod 4755 disable_security_options.sh
+sudo chown root:1000 mongoose/static_server
+sudo chmod 4755 mongoose/static_server
+
+# install database & put data
+sudo apt-get install -y mysql-server
+sudo service mysql start
+echo create database sugang | mysql -uroot -proot
+mysql -uroot -proot sugang < mysql/sugang.sql
