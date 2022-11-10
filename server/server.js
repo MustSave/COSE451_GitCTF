@@ -15,7 +15,7 @@ var corsOptions = {
 // hide x-powered-by && set header for security
 app.use(require("helmet")())
 // enable cors option
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json and application/x-www-form-urlencoded
 app.use(express.json(), express.urlencoded({extended: true}));
