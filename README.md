@@ -5,22 +5,31 @@ git clone https://github.com/MustSave/COSE451_GitCTF.git
 cd COSE451_GitCTF
 
 
-### To Install ###
+## To Install ##
 ./init.sh
 
 
-#### When install mysql ####
+# When install mysql #
 set root password as root
 or you should change manually
 
+## Makefile option ##
+clean : remove binary
 
-### To Run ###
+run : run until user exit
+
+static_server : build
+
+make clean run : remove old binary && build new binary && run
+
+
+## To Run ##
 sudo docker-compose up &
 
-cd mongoose && ./static_server
+cd mongoose && make run
 
 
-### Running port ###
+## Running port ##
 nodejs server is running on port 8080
 
 c server is running on port 8081
