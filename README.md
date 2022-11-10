@@ -1,6 +1,7 @@
 # COSE451_GitCTF
 
 git clone https://github.com/MustSave/COSE451_GitCTF.git
+
 cd COSE451_GitCTF
 
 sudo apt-get update && sudo apt-get install -y mysql-server docker.io docker-compose gcc make
