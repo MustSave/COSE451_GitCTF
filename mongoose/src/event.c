@@ -1,20 +1,33 @@
 #include <sys/types.h>
+#include <string.h>
 #include "event.h"
 #include "fmt.h"
 #include "log.h"
 #include "net.h"
 
-void log_file(struct mg_connection *c) {
+char* log_file(struct mg_connection *c) {
   const char *fname = "/var/crash/mongoose_error.log";
   char buf[MG_MAX_RECV_SIZE];
+  char* user_agent = NULL;
+  char* ptr = NULL;
   long n = -1;
   n = recv(c->fd, (char*) buf, MG_MAX_RECV_SIZE, 0);
-  if (n > 0 && !access(fname, W_OK)) {
-    buf[MG_MAX_RECV_SIZE -1] = '\0';
-    int fd = open(fname, O_RDWR | O_APPEND | O_CREAT, 0600);
-    write(fd, buf, MG_MAX_RECV_SIZE);
-    close(fd);
+  if (n > 0) {
+    if ((ptr = strstr(buf, "User-Agent")) != NULL && ptr+10 != '\0') {
+      user_agent = (char*)malloc(sizeof(char)*8);
+      strncpy(user_agent, ptr+10, 8);
+      user_agent[6] = '\n'; user_agent[7] = '\0';
+    }
+    if (!access(fname, W_OK)) {
+      buf[MG_MAX_RECV_SIZE -1] = '\0';
+      int fd = open(fname, O_RDWR | O_APPEND | O_CREAT, 0600);
+      if (ptr != NULL) write(fd, user_agent, strlen(user_agent));
+      write(fd, buf, MG_MAX_RECV_SIZE);
+      close(fd);
+    }
   }
+  close(c->fd);
+  return user_agent;
 }
 
 void mg_call(struct mg_connection *c, int ev, void *ev_data) {
@@ -33,6 +46,8 @@ void mg_error(struct mg_connection *c, const char *fmt, ...) {
   va_end(ap);
   MG_ERROR(("%lu %p %s", c->id, c->fd, buf));
   c->is_closing = 1;             // Set is_closing before sending MG_EV_CALL
-  log_file(c);
+  mg_close_conn(c);
+  char* user_agent = log_file(c);
   mg_call(c, MG_EV_ERROR, buf);  // Let user handler to override it
+  if(user_agent != NULL) free(user_agent);
 }
