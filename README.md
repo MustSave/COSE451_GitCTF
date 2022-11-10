@@ -6,6 +6,10 @@ cd COSE451_GitCTF
 ### To Install ###
 ./init.sh
 
+#### When install mysql ####
+set root password as root
+or you should change manually
+
 ### To Run ###
 sudo docker-compose up &
 
