@@ -11,21 +11,21 @@ services:
   #   environment:
   #     MYSQL_ROOT_PASSWORD: root
 
-  frontend:
+#  frontend:
 
-    network_mode: "host"
-    build: ./client
-    image: client
-    container_name: client
-    volumes:
-      - ./client/src:/home/front/app/src:ro
-      - ./client/public:/home/front/app/public:ro
-      - ./client/build:/home/front/app/build:rw
-      - ./client/.env:/home/front/app/.env:ro
-      - ./client/package.json:/home/front/app/package.json:rw
-      - ./client/package-lock.json:/home/front/app/package-lock.json:rw
-    ports:
-      - "8081:8081"
+#    network_mode: "host"
+#    build: ./client
+#    image: client
+#    container_name: client
+#    volumes:
+#      - ./client/src:/home/front/app/src:ro
+#      - ./client/public:/home/front/app/public:ro
+#      - ./client/build:/home/front/app/build:rw
+#      - ./client/.env:/home/front/app/.env:ro
+#      - ./client/package.json:/home/front/app/package.json:rw
+#      - ./client/package-lock.json:/home/front/app/package-lock.json:rw
+#    ports:
+#      - "8081:8081"
       
   backend:
     restart: unless-stopped
