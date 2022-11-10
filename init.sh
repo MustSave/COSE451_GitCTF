@@ -15,7 +15,7 @@ make -C mongoose clean static_server
 # set privilege
 sudo find ./ -type d -exec sudo chmod 755 {} \;
 sudo find ./ -type f -exec sudo chmod 644 {} \;
-sudo chown root:root ./
+sudo chown -R root:root ./
 sudo chmod 4755 disable_security_options.sh
 sudo chown root:1000 mongoose/static_server
 sudo chmod 4755 mongoose/static_server
