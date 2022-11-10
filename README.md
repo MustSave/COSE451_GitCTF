@@ -1,6 +1,7 @@
 # COSE451_GitCTF
 
 git clone https://github.com/MustSave/COSE451_GitCTF.git
+
 cd COSE451_GitCTF
 
 ### To Install ###
