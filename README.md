@@ -1,17 +1,11 @@
 # COSE451_GitCTF
 
-git clone https://github.com/MustSave/COSE451_GitCTF.git
+## To Setup ##
+`git clone https://github.com/MustSave/COSE451_GitCTF.git`
 
-cd COSE451_GitCTF
+`cd COSE451_GitCTF`
 
-
-## To Install ##
-./init.sh
-
-
-# When install mysql #
-set root password as root
-or you should change manually
+`./init.sh`
 
 ## Makefile option ##
 clean : remove binary
@@ -24,9 +18,9 @@ make clean run : remove old binary && build new binary && run
 
 
 ## To Run ##
-sudo docker-compose up &
+`sudo docker-compose up &`
 
-cd mongoose && make run
+`cd mongoose && make run`
 
 
 ## Running port ##
@@ -40,5 +34,13 @@ now you can get http://localhost:81 or in local network, http://"IP of server":8
 
 ## test account ##
 id : 2022123456
+
 pw : 1234
+
+## mysql account ##
+id : root
+
+pw : root
+
+`mysql -uroot -proot`
 
