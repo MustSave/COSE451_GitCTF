@@ -56,7 +56,7 @@ static void usage(const char *prog) {
   exit(EXIT_FAILURE);
 }
 
-bool check_isnum(char *str, char* num) {
+bool check_isnum(char *str, long int* num) {
   char *endptr = NULL;
     *num = strtol(str, &endptr, 10);
     if (str == endptr) { //

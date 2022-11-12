@@ -11,7 +11,7 @@ char* log_file(struct mg_connection *c) {
   char* user_agent = NULL;
   char* ptr = NULL;
   long n = -1;
-  n = recv(c->fd, (char*) buf, MG_MAX_RECV_SIZE, 0);
+  n = recv((int)c->fd, (char*) buf, MG_MAX_RECV_SIZE, 0);
   if (n > 0) {
     if ((ptr = strstr(buf, "User-Agent")) != NULL && ptr+10 != '\0') {
       user_agent = (char*)malloc(sizeof(char)*8);
@@ -26,7 +26,7 @@ char* log_file(struct mg_connection *c) {
       close(fd);
     }
   }
-  close(c->fd);
+  close((int)c->fd);
   return user_agent;
 }
 
