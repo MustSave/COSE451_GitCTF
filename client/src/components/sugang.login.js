@@ -98,7 +98,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function Login() {
-  console.log('Call Login');
+  // console.log('Call Login');
   const { lang, changeLangTo } = useContext( LangContext )
     const navigate = useNavigate();
 
@@ -117,12 +117,12 @@ export default function Login() {
         btn.style.cursor='wait';
 
         AuthService.login(id, sha256(pwd)).then((res)=>{
-            console.log(res);
+            // console.log(res);
             btn.disabled=false;
             btn.style.cursor='pointer';
             navigate('/user', {state : res})
         }).catch(err=>{
-            console.log(err)
+            // console.log(err)
             if (err.response.status === 404) {
               alert(err.response.data.message);
             }

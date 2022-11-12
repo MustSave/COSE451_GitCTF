@@ -85,7 +85,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function Loader() {
-    console.log('Call Loader');
+    // console.log('Call Loader');
     return(
         <StyledDiv className="wrap-loader hidden">
             <span className="loading-helper"/>

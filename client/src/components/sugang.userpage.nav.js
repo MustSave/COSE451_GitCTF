@@ -167,7 +167,7 @@ const menuList = [
 ]
 
 export default function Nav({setPage}) {
-    console.log('Call Nav');
+    // console.log('Call Nav');
     const {lang, changeLangTo} = useContext(LangContext);
 
     const onCLickMenu = event => {
@@ -193,11 +193,11 @@ export default function Nav({setPage}) {
 
             <div className="nav-footer">
                 <div id="manual">
-                    <button type="button" className="btn-footer" onClick={()=>console.log(this)}>
+                    <button type="button" className="btn-footer">
                         <span id="manualPC">{lang === 'KOR' ? "사용자 매뉴얼 (PC)" : "User Manual (PC)"}</span>
                         <i className="sw-icon-download"></i>
                     </button>
-                    <button type="button" className="btn-footer" onClick={()=>console.log(this)}>
+                    <button type="button" className="btn-footer">
                         <span id="manualMO">{lang === 'KOR' ? "사용자 매뉴얼 (모바일앱)" : "User Manual (Mobile)"}</span>
                         <i className="sw-icon-download"></i>
                     </button>

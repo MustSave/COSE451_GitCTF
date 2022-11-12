@@ -35,7 +35,6 @@ exports.enroll = (req, res) => {
     ];
 
     q=db.query(credit_query, credit_param, (err, credit_result)=>{
-        console.log(q.sql, credit_result);
         if (err || credit_result.length == 0) return res.status(400).send("bb");
         const {credit, max_credit} = credit_result[0];
         if (credit <= max_credit){

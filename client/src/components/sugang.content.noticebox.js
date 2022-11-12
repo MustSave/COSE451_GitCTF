@@ -84,7 +84,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function NoticeBox({data, link}){
-  console.log('Call ContentInfo');
+  // console.log('Call ContentInfo');
   const {lang} = useContext(LangContext);
 
     return (

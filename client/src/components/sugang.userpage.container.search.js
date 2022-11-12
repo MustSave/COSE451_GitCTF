@@ -225,7 +225,7 @@ function validateYear(e, curYear) {
 }
 
 export default function SearchLecture({userInfo}) {
-    console.log("Called Search")
+    // console.log("Called Search")
     const [lecList, setLecList] = useState();
     const [trigger, setTrigger] = useState();
 
@@ -323,14 +323,14 @@ export default function SearchLecture({userInfo}) {
 
     const onClickSearch = (e)=>{
         apiService.getLecList({...inputObjects, ...optionalInput.current})
-        .then(res=>{console.log(res);setLecList(res)})
+        .then(res=>{setLecList(res)})
         .catch(handleError)
     }
 
     return (
         <StyledDiv id='contents' className="contents">
             <div className="form-search">
-                <form name="sForm" id="sForm" onSubmit={()=>console.log(1)}>
+                <form name="sForm" id="sForm" onSubmit={onClickSearch}>
                     <table>
                         <colgroup>
                             <col width={"60px"}/>
@@ -392,7 +392,7 @@ export default function SearchLecture({userInfo}) {
                                 <td colSpan="3"><input type="text" name="cour_nm" id="cour_nm" onChange={handleOptional}/></td>
                                 <td className="search">
                                     <button type="button" id="btnSearch" className="btn-sub" onClick={onClickSearch}>조회</button>
-                                    <button type="button" id="btnReset" onClick={console.log}>초기화</button>
+                                    <button type="button" id="btnReset" onClick={()=>console.log("To do")}>초기화</button>
                                 </td>
                             </tr>
                         </tbody>

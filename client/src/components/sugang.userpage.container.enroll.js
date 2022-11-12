@@ -82,7 +82,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function Enroll({userInfo}) {
-    console.log("Called Enroll")
+    // console.log("Called Enroll")
     const [history, setHistory] = useState();
     const enrollParam = useRef({
         std_num: userInfo.std_num,
@@ -99,7 +99,7 @@ export default function Enroll({userInfo}) {
     }
     
     useEffect(()=>{
-        console.log("UE");
+        // console.log("UE");
         userService.getHistory({std_num: userInfo.std_num, year: userInfo.year, term: userInfo.term})
             .then(res=>setHistory(res))
             .catch(handleError)

@@ -143,7 +143,7 @@ min-height: 100vh;
 `;
 
 export default function Container({page, setShowNav, userInfo}) {
-    console.log('Call Container');
+    // console.log('Call Container');
     const {lang} = useContext(LangContext);
     
     const [visible, setVisible] = useState(false);

@@ -9,7 +9,7 @@ export default function App() {
   const [lang, setLang] = useState('KOR');
   const changeLangTo = value => {
     setLang(value);
-    console.log(`Lang : ${lang}`)
+    // console.log(`Lang : ${lang}`)
   }
   return (
     <LangContext.Provider value={{lang, changeLangTo}}>

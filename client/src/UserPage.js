@@ -16,7 +16,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function UserPage(){
-    console.log('Call Home');
+    // console.log('Call Home');
     const {state:userInfo} = useLocation(); // get info when login
     const [showNav, setShowNav] = useState(true);
     const [page, setPage] = useState('Search');

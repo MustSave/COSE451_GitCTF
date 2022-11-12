@@ -20,7 +20,7 @@ background-color: #760023;
 `;
 
 export default function LoginPage() {
-console.log('Call App');
+// console.log('Call App');
 return (
     <div className='login'>
       <StyledDiv className='header'>

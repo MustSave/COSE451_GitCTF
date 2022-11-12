@@ -57,7 +57,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function NoticeList() {
-    console.log('Call InfoBox');
+    // console.log('Call InfoBox');
     const [display, setDisplay] = useState('none');
 
     const onClickInfo = event => {

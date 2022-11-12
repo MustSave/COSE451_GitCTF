@@ -47,7 +47,7 @@ const StyledDiv = styled.div`
 `;
 
 export default function Content(){
-    console.log('Call Content');
+    // console.log('Call Content');
     const { lang } = useContext( LangContext );
 
     return (

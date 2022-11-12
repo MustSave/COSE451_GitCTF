@@ -86,7 +86,7 @@ const StyledLi = styled.li`
 `;
 
 export default function MenuList({setPage, title, children}) {
-    console.log('Call MenuList');
+    // console.log('Call MenuList');
     const {lang} = useContext(LangContext);
     const parentElement = useRef();
 
