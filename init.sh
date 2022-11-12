@@ -1,5 +1,6 @@
 # Move to working directory
-cd "$(find /home/ -name "init.sh" -execdir pwd \; -quit)"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+cd $SCRIPT_DIR
 
 # install packages
 sudo apt-get update && sudo apt-get install -y docker.io docker-compose gcc make

@@ -18,9 +18,20 @@ make clean run : remove old binary && build new binary && run
 
 
 ## To Run ##
-`sudo docker-compose up &`
+`sudo docker-compose up -d`
 
 `cd mongoose && make run`
+
+or
+
+`./run.sh`
+
+
+## To Stop ##
+
+`ctrl + c` to stop static server
+
+`sudo docker-compose stop`
 
 
 ## Running port ##
