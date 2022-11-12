@@ -4,10 +4,11 @@ cd "$(find /home/ -name "init.sh" -execdir pwd \; -quit)"
 # install packages
 sudo apt-get update && sudo apt-get install -y docker.io docker-compose gcc make
 
-# pull docker image
+# pull docker image & build
 sudo docker pull kito4972/node:16.18.0
 sudo docker tag kito4972/node:16.18.0 node
 sudo docker rmi kito4972/node:16.18.0
+sudo docker-compose build
 
 # build c
 make -C mongoose clean static_server
