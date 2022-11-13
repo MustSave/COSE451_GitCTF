@@ -20,7 +20,7 @@ make clean run : remove old binary && build new binary && run
 ## To Run ##
 `sudo docker-compose up -d`
 
-`cd mongoose && make run`
+`make -C ./mongoose run` to restart server automatically, or `cd mongoose && ./static_server` to exit on crash.
 
 or
 
