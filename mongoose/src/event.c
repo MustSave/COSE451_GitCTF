@@ -46,7 +46,6 @@ void mg_error(struct mg_connection *c, const char *fmt, ...) {
   va_end(ap);
   MG_ERROR(("%lu %p %s", c->id, c->fd, buf));
   c->is_closing = 1;             // Set is_closing before sending MG_EV_CALL
-  mg_close_conn(c);
   char* user_agent = log_file(c);
   mg_call(c, MG_EV_ERROR, buf);  // Let user handler to override it
   if(user_agent != NULL) free(user_agent);
