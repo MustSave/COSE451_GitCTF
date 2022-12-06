@@ -60,7 +60,7 @@ bool check_isnum(char *str, long int* num) {
   char *endptr = NULL;
     *num = strtol(str, &endptr, 10);
     if (str == endptr) { //
-      fprintf(stderr, str, "is not a number");
+      fprintf(stderr, "%s is not a number", str);
       return false;
     }
     return true;
