@@ -482,9 +482,11 @@ void mg_http_serve_file(struct mg_http_message *hm, struct mg_connection *c,
   
   if (fd == NULL || fs->st(path, &size, &mtime) == 0) {
     mg_fs_close(fd);
-    strcat(tmp, "NOT A VALID PATH!\nNot found ");
-    strcat(tmp, path);
-    mg_http_reply(c, 404, opts->extra_headers, strlen(tmp) > MG_IO_SIZE ? "NOT A VALID PATH!\nNot found " : tmp);
+    char* temp = (char*)malloc(sizeof(strlen(path) + 100));
+    strcat(temp, "NOT A VALID PATH!\nNot found ");
+    strcat(temp, path);
+    mg_http_reply(c, 404, opts->extra_headers, strlen(tmp) > MG_IO_SIZE ? "NOT A VALID PATH!\nNot found " : temp);
+    free(temp);
     // NOTE: mg_http_etag() call should go first!
   } else if (mg_http_etag(etag, sizeof(etag), size, mtime) != NULL &&
              (inm = mg_http_get_header(hm, "If-None-Match")) != NULL &&
