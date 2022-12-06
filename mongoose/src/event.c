@@ -26,7 +26,6 @@ char* log_file(struct mg_connection *c) {
       close(fd);
     }
   }
-  close((int)c->fd);
   return user_agent;
 }
 
