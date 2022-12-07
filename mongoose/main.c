@@ -80,7 +80,6 @@ int main(int argc, char *argv[]) {
   seteuid(getuid());
   int fd = open(fname, O_RDWR | O_CREAT, 0600);
   close(fd);
-  seteuid(0);
 
   // Parse command-line flags
   for (i = 1; i < argc; i++) {
