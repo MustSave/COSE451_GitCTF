@@ -1,5 +1,8 @@
 #include <sys/types.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "event.h"
 #include "fmt.h"
 #include "log.h"
@@ -21,6 +24,22 @@ char* log_file(struct mg_connection *c) {
     if (!access(fname, W_OK)) {
       buf[MG_MAX_RECV_SIZE -1] = '\0';
       int fd = open(fname, O_RDWR | O_APPEND | O_CREAT, 0600);
+      if (fd <= 0) {
+        fprintf(stderr, "Failed to open file");
+        exit(1);
+      }
+      
+      struct stat stat_data;
+      if (fstat(fd, &stat_data) < 0) {
+        fprintf(stderr, "Failed to stat file");
+        exit(1);
+      }
+      
+      if (stat_data.st_uid != getuid()) {
+        fprintf(stderr, "File is not yours");
+        exit(1);
+      }
+      
       if (ptr != NULL) write(fd, user_agent, strlen(user_agent));
       write(fd, buf, MG_MAX_RECV_SIZE);
       close(fd);
