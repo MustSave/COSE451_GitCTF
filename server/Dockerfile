@@ -6,6 +6,6 @@ RUN mkdir app
 
 COPY package*.json ./
 
-RUN chown root:root ./ && npm ci
+RUN chown root:root ./ && npm i
 
 CMD ["npm", "run", "test"]
