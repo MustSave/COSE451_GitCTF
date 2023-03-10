@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors");
+// const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const fileStore = require("session-file-store")(session);
@@ -7,10 +7,10 @@ const fileStore = require("session-file-store")(session);
 const app = express();
 
 require('dotenv').config();
-var corsOptions = {
-    origin: ["http://localhost:8081", "http://localhost:8000"],
-    credentials: true,
-};
+// var corsOptions = {
+//     origin: ["http://localhost:8081", "http://localhost:8000"],
+//     credentials: true,
+// };
 
 // hide x-powered-by && set header for security
 app.use(require("helmet")())
